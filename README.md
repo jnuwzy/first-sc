@@ -1,7 +1,7 @@
 adrProject
 ==============================
 
-the demo
+Project for master thesis - <>
 
 Project Organization
 ------------
