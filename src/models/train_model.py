@@ -1,12 +1,21 @@
 # 2024.3.13 zhaoy wang
+# 2024.3.15 zhaoy wang argparse
+import os
 
 import torch
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import torch.nn.functional as F
+import argparse
 
-print(torch.__version__)
-print(torch.cuda.is_available())
+def base_parser():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--GPU', type=str, default='0',
+                      help='Set -1 for CPU running')
+  parser.add_argument('--split', type=float,
+                      default=0.3)
+  config = parser.parse_args()
+  return config
 
 X_train = torch.tensor([
     [-1.2, 3.1],
@@ -86,7 +95,7 @@ model = NeuralNetwork(num_inputs=2, num_outputs=2)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # NEW
 model = model.to(device) # NEW
 
-optimizer = torch.optim.SGD(model.parameters(), lr=0.5)
+optimizer = torch.optim.SGD(model.parameters(), lr = 0.5)
 
 num_epochs = 3
 
@@ -134,3 +143,12 @@ print(compute_accuracy(model, train_loader, device=device))
 print(compute_accuracy(model, test_loader, device=device))
 
 torch.save(model.state_dict(), "model.pth")
+
+if __name__ == '__main__':
+    config = base_parser()
+    if config.GPU != '-1':
+        config.GPU_print = [int(config.GPU.split(',')[0])]
+        os.environ["CUDA_VISIBLE_DEVICES"] = config.GPU
+        config.GPU = [int(i) for i in range(len(config.GPU.split(',')))]
+    else:
+        config.GPU = False

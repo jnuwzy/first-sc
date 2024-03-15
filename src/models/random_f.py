@@ -29,7 +29,6 @@ import sys
 sys.modules['sklearn.neighbors.base'] = sklearn.neighbors._base
 from missingpy import MissForest
 from imblearn.over_sampling import BorderlineSMOTE
-import model_setting
 
 import warnings
 
