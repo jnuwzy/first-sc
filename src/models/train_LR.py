@@ -62,11 +62,9 @@ class LogisticRegression:
 file_path = '../data/v2.xls'  # .. 表示上一级目录，即src目录
 df = pd.read_excel(file_path)
 
-# 选择第3、6、7、19、21、22列，从第二行开始（索引为1）作为特征X
-X = df.iloc[:, [2, 5, 6, 18, 20, 21]].values
-
-# 选择第23列，从第二行开始（索引为1）作为标签y
-y = df.iloc[:, 23].values
+# 分离特征和目标变量
+X = df[['年龄', ' BMI ', '体脂百分比', '腰臀比', '肥胖度', '骨骼肌指数']]
+y = df['胰岛素抵抗存在=1']
 
 
 # 划分训练集、测试集

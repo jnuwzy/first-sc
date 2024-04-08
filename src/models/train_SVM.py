@@ -8,9 +8,9 @@ from sklearn.metrics import accuracy_score
 file_path = '../data/v2.xls'
 df = pd.read_excel(file_path)
 
-# 选择特征列和标签列
-X = df.iloc[:, [2, 5, 6, 18, 20, 21]].values
-y = df.iloc[:, 23].values
+# 分离特征和目标变量
+X = df[['年龄', ' BMI ', '体脂百分比', '腰臀比', '肥胖度', '骨骼肌指数']]
+y = df['胰岛素抵抗存在=1']
 
 # 将数据分为训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
